@@ -3,7 +3,7 @@
 PSQL="psql --username=freecodecamp --dbname=<database_name> -t --no-align -c"
 
 echo -e "\nEnter your username:"
-READ USER_NAME
+read USER_NAME
 
 #if not found
 echo -e "\nWelcome, <username>! It looks like this is your first time here."
