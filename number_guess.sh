@@ -17,7 +17,9 @@ if [[ -z $USER_LIST_RESULT ]]
 then
   #if not found
   echo -e "\nWelcome, $USER_NAME! It looks like this is your first time here."
+  echo -e "\nGuess the secret number between 1 and 100:"
 else
   #if found
   echo -e "\nWelcome back, $USER_LIST_RESULT! You have played <games_played> games, and your best game took <best_game> guesses"
+  echo -e "\nGuess the secret number between 1 and 100:"
 fi
