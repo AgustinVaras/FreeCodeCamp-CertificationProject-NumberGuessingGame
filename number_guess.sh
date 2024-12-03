@@ -23,3 +23,4 @@ else
   echo -e "\nWelcome back, $USER_LIST_RESULT! You have played <games_played> games, and your best game took <best_game> guesses"
   echo -e "\nGuess the secret number between 1 and 100:"
 fi
+read PLAYER_GUESS
