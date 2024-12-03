@@ -2,6 +2,12 @@
 
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 
+MAX=1000
+MIN=1
+
+RANDOM_NUMBER=$(($RANDOM%($MAX-$MIN)+$MIN))
+echo $RANDOM_NUMBER
+
 echo -e "\nEnter your username:"
 read USER_NAME
 
