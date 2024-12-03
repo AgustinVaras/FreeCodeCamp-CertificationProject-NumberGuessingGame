@@ -20,3 +20,4 @@ else
   #if found
   echo -e "\nWelcome back, <username>! You have played <games_played> games, and your best game took <best_game> guesses"
 fi
+read PLAYER_GUESS
