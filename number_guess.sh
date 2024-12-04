@@ -11,7 +11,36 @@ echo $SECRET_NUMBER
 echo -e "\nEnter your username:"
 read USER_NAME
 
-USER_LIST_RESULT=$($PSQL "SELECT username FROM players WHERE username = '$USER_NAME' " )
+USER_LIST_RESULT=$($PSQL "
+  SELECT 
+    username,
+    (
+      SELECT
+        COUNT(*)
+      FROM
+        games g
+      INNER JOIN
+        players p
+      USING(player_id)
+      WHERE
+        p.username = '$USER_NAME'
+    ) AS games_count,
+    (
+      SELECT
+        MIN(g.guesses)
+      FROM
+        games g
+      INNER JOIN
+        players p
+      USING(player_id)
+      WHERE
+        p.username = '$USER_NAME'
+    ) AS best_game
+  FROM
+    players
+  WHERE
+    username = '$USER_NAME' 
+" )
 
 if [[ -z $USER_LIST_RESULT ]]
 then
