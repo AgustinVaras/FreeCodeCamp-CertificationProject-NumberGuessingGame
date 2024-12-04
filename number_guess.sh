@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
+PSQL="psql --username=freecodecamp --dbname=number_guess --tuples-only -c"
 
 MAX=1000
 MIN=1
@@ -58,7 +58,10 @@ then
   echo -e "\nGuess the secret number between 1 and 100:"
 else
   #if found
-  echo -e "\nWelcome back, $USER_LIST_RESULT! You have played <games_played> games, and your best game took <best_game> guesses"
+  echo $USER_LIST_RESULT | while read USERNAME BAR GAMES_COUNT BAR BEST_GAME
+  do
+    echo -e "\nWelcome back, $USERNAME! You have played $GAMES_COUNT games, and your best game took $BEST_GAME guesses"
+  done
   echo -e "\nGuess the secret number between 1 and 1000:"
 fi
 
