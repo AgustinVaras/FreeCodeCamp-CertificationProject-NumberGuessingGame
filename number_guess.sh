@@ -32,15 +32,9 @@ then
   then
     echo -e "\nIt's lower than that, guess again:"
   fi
-  
-  #When the guess is lower
-  if [[ $PLAYER_GUESS < $SECRET_NUMBER ]]
-  then
-    echo -e "\nIt's higher than that, guess again:"
-  fi
+done
 
-  if [[ $PLAYER_GUESS == $SECRET_NUMBER ]] 
-  then
-    echo -e "\nYou guessed it in <number_of_guesses> tries. The secret number was $SECRET_NUMBER. Nice job!"
-  fi
-fi
+#Save game info. 
+PLAYER_ID=$($PSQL "SELECT player_id FROM players WHERE username = '$USER_NAME'")
+
+INSERT_GAME_RESULT=$($PSQL "INSERT INTO games(player_id, guesses) VALUES($PLAYER_ID, $TRYS)" )
