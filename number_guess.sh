@@ -6,7 +6,6 @@ MAX=1000
 MIN=1
 
 SECRET_NUMBER=$(($RANDOM%($MAX-$MIN)+$MIN))
-# echo $SECRET_NUMBER
 
 echo -e "\nEnter your username:"
 read USER_NAME
@@ -70,7 +69,6 @@ TRYS=0;
 while [[ $PLAYER_GUESS != $SECRET_NUMBER ]]
 do
   (( TRYS++ ))
-  # echo -e "\nTrys: $TRYS"
   read PLAYER_GUESS
 
   if [[ $PLAYER_GUESS =~ ^[0-9]+$ ]]
@@ -88,10 +86,6 @@ do
       echo -e "\nIt's higher than that, guess again:"
     fi
 
-    # if [[ $PLAYER_GUESS == $SECRET_NUMBER ]] 
-    # then
-      
-    # fi
   else
     echo -e "\nThat is not an integer, guess again:"
   fi
