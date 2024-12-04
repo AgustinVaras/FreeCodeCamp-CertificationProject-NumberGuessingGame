@@ -17,6 +17,15 @@ if [[ -z $USER_LIST_RESULT ]]
 then
   #if not found
   echo -e "\nWelcome, $USER_NAME! It looks like this is your first time here."
+  #if the user is a new player we generate a new row in the db to later track his games
+  NEW_PLAYER_INSERT_RESULT=$($PSQL "INSERT INTO players(username) VALUES('$USER_NAME')" )
+
+  if [[ $NEW_PLAYER_INSERT_RESULT != 'INSERT 0 1' ]]
+  then
+    echo -e "\nError, couldn't generate new player entry"
+    exit 128
+  fi
+
   echo -e "\nGuess the secret number between 1 and 100:"
 else
   #if found
