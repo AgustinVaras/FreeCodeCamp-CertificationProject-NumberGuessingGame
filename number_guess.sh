@@ -92,6 +92,8 @@ do
     then
       echo -e "\nYou guessed it in $TRYS tries. The secret number was $SECRET_NUMBER. Nice job!"
     fi
+  else
+    echo -e "\nThat is not an integer, guess again:"
   fi
 done
 
