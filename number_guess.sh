@@ -62,3 +62,8 @@ do
     fi
   fi
 done
+
+#Save game info. 
+PLAYER_ID=$($PSQL "SELECT player_id FROM players WHERE username = '$USER_NAME'")
+
+INSERT_GAME_RESULT=$($PSQL "INSERT INTO games(player_id, guesses) VALUES($PLAYER_ID, $TRYS)" )
