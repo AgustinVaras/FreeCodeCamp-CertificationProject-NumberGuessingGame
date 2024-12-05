@@ -11,12 +11,51 @@ SECRET_NUMBER=$(($RANDOM%($MAX-$MIN)+$MIN))
 echo -e "\nEnter your username:"
 read USER_NAME
 
-USER_LIST_RESULT=$($PSQL "SELECT username FROM players WHERE username = '$USER_NAME' " )
+USER_LIST_RESULT=$($PSQL "
+  SELECT 
+    username,
+    (
+      SELECT
+        COUNT(*)
+      FROM
+        games g
+      INNER JOIN
+        players p
+      USING(player_id)
+      WHERE
+        p.username = '$USER_NAME'
+    ) AS games_count,
+    (
+      SELECT
+        MIN(g.guesses)
+      FROM
+        games g
+      INNER JOIN
+        players p
+      USING(player_id)
+      WHERE
+        p.username = '$USER_NAME'
+    ) AS best_game
+  FROM
+    players
+  WHERE
+    username = '$USER_NAME' 
+" )
 
 if [[ -z $USER_LIST_RESULT ]]
 then
   #if not found
-  echo -e "\nWelcome, <username>! It looks like this is your first time here."
+  echo -e "\nWelcome, $USER_NAME! It looks like this is your first time here."
+  #if the user is a new player we generate a new row in the db to later track his games
+  NEW_PLAYER_INSERT_RESULT=$($PSQL "INSERT INTO players(username) VALUES('$USER_NAME')" )
+
+  if [[ $NEW_PLAYER_INSERT_RESULT != 'INSERT 0 1' ]]
+  then
+    echo -e "\nError, couldn't generate new player entry"
+    exit 128
+  fi
+
+  echo -e "\nGuess the secret number between 1 and 100:"
 else
   #if found
   echo $USER_LIST_RESULT | while read USERNAME BAR GAMES_COUNT BAR BEST_GAME
@@ -25,7 +64,6 @@ else
   done
   echo -e "\nGuess the secret number between 1 and 1000:"
 fi
-read PLAYER_GUESS
 
 TRYS=0;
 
